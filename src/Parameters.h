@@ -75,8 +75,8 @@
 
 //arm position set points (all in fractions of a full encoder rotation)
 #if robotConfig == robot2016
-#define armDownPosition -0.82 //fully down is -0.95
-#define armUpPosition -0.8305 //.76
+#define armDownPosition -0.952 // -0.82
+#define armUpPosition -.76
 #define armPidDisablePosition -0.8 //point on the way down to disable the arm pid
 #elif robotConfig == robot2015
 #define armDownPosition -1.65

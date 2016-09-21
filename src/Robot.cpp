@@ -122,16 +122,17 @@ private:
 		else if (controlStick->GetRawButton(armDown))
 		{
 			armDownStatus = true;
+			armMotor->EnableControl ();
 			armMotor->Set(armDownPosition);
-			//pid should already be enabled (from going up)
+			//pid should  already be enabled (from going up)
 		}
 
-		if(armMotor->Get() < armPidDisablePosition && armDownStatus == true)
+		/*if(armMotor->Get() < armPidDisablePosition && armDownStatus == true)
 		{
 			armDownStatus = false;
 			armMotor->Disable();
 		}
-
+*/
 		//status
 		dataTablePtr ->PutNumber("LeftEncDist", leftDriveEnc->GetDistance());
 		dataTablePtr ->PutNumber ("RightEncDist", rightDriveEnc->GetDistance());
