@@ -33,6 +33,8 @@
 //can IDs
 #if robotConfig == robot2016
 #define rollerMotorId 1
+#define leftShooterMotorId 3
+#define rightShooterMotorId 4
 #define armMotorId 2
 #elif robotConfig == robot2015
 #define rollerMotorId 13
@@ -89,7 +91,7 @@
 #define armPidMaxNominal +0.0
 #define armPidMinPeak -12.0
 #define armPidMaxPeak +12.0
-#define armPidAllowableErr 0.0 //same units are arm position set points
+#define armPidAllowableErr 0.0 //same units as arm position set points
 #if robotConfig == robot2016
 #define armPidP 1.3
 #define armPidIAuto 0.001
@@ -102,6 +104,56 @@
 #define armPidITeleop 0.0006
 #define armPidD 100.0
 #define armPidInvert true //true to invert, false not to invert
+#endif
+
+//left shooter setpoints (all in rpm)
+#if robotConfig == robot2016
+#define leftShooterStop 0.0
+#define leftShooterIntake -400
+#define leftShooterLowGoal 500
+#define leftShooterHighGoal 2500
+#elif robotConfig == robot2015
+//the shooter only exists on 2016 robot
+#endif
+
+//left shooter PID controller
+#define leftShooterPidMinNominal -0.0 //min and maxes are all in volts
+#define leftShooterPidMaxNominal +0.0
+#define leftShooterPidMinPeak -12.0
+#define leftShooterPidMaxPeak +12.0
+#define leftShooterPidAllowableErr 0.0 //same units as shooter speed set points
+#if robotConfig == robot2016
+#define leftShooterPidP 1.0
+#define leftShooterPidI 0.000
+#define leftShooterPidD 0.0
+#define leftShooterPidInvert false //true to invert, false not to invert
+#elif robotConfig == robot2015
+//the shooter only exists on 2016 robot
+#endif
+
+//right shooter setpoints (all in rpm)
+#if robotConfig == robot2016
+#define rightShooterStop leftShooterStop
+#define rightShooterIntake -400
+#define rightShooterLowGoal 500
+#define rightShooterHighGoal 2500
+#elif robotConfig == robot2015
+//the shooter only exists on 2016 robot
+#endif
+
+//right shooter PID controller
+#define rightShooterPidMinNominal -0.0 //min and maxes are all in volts
+#define rightShooterPidMaxNominal +0.0
+#define rightShooterPidMinPeak -12.0
+#define rightShooterPidMaxPeak +12.0
+#define rightShooterPidAllowableErr 0.0 //same units as shooter speed set points
+#if robotConfig == robot2016
+#define rightShooterPidP 1.0
+#define rightShooterPidI 0.000
+#define rightShooterPidD 0.0
+#define rightShooterPidInvert false //true to invert, false not to invert
+#elif robotConfig == robot2015
+//the shooter only exists on 2016 robot
 #endif
 
 //drive parameters

@@ -14,6 +14,8 @@ private:
 	
 	Joystick *controlStick;
 	CANTalon *rollerMotor;
+	CANTalon *leftShooterMotor;
+	CANTalon *rightShooterMotor;
 	DigitalInput *ballCapturedPhotoSwitch;
 	bool rollerInOn;
 	CANTalon *armMotor;
@@ -30,6 +32,13 @@ private:
 		CameraServer::GetInstance()->SetQuality(25);
 		CameraServer::GetInstance()->StartAutomaticCapture("cam0"); //the camera name (ex "cam0") can be found through the roborio web interface
 
+		leftShooterMotor->SetPID(leftShooterPidP, leftShooterPidI, leftShooterPidD);
+		leftShooterMotor->Set(leftShooterStop);
+		leftShooterMotor->EnableControl();
+
+		rightShooterMotor->SetPID(rightShooterPidP, rightShooterPidI, rightShooterPidD);
+		rightShooterMotor->Set(rightShooterStop);
+		rightShooterMotor->EnableControl();
 	}
 
 	void AutonomousInit()
@@ -37,11 +46,13 @@ private:
 		leftDriveEnc->Reset();
 		rightDriveEnc->Reset();
 
+		rollerMotor ->Set(rollerStopSpeed);
+
 		armMotor->SetPID(armPidP, armPidIAuto, armPidD);
 		armMotor->Set(armUpPosition);
 		armMotor->EnableControl();
 
-		rollerMotor ->Set(rollerStopSpeed);
+
 	}
 
 	void AutonomousPeriodic()
@@ -172,6 +183,24 @@ public:
 
 		rollerMotor = new CANTalon(rollerMotorId);
 
+		leftShooterMotor = new CANTalon(leftShooterMotorId);
+
+		leftShooterMotor ->SetControlMode(CANSpeedController::kSpeed);
+		leftShooterMotor ->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+		leftShooterMotor ->SetSensorDirection(leftShooterPidInvert);
+		leftShooterMotor ->ConfigNominalOutputVoltage(leftShooterPidMaxNominal,leftShooterPidMinNominal);
+		leftShooterMotor ->ConfigPeakOutputVoltage(leftShooterPidMaxPeak,leftShooterPidMinPeak);
+		leftShooterMotor ->SetAllowableClosedLoopErr(leftShooterPidAllowableErr);
+
+		rightShooterMotor = new CANTalon(rightShooterMotorId);
+
+		rightShooterMotor ->SetControlMode(CANSpeedController::kSpeed);
+		rightShooterMotor ->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+		rightShooterMotor ->SetSensorDirection(rightShooterPidInvert);
+		rightShooterMotor ->ConfigNominalOutputVoltage(rightShooterPidMaxNominal,rightShooterPidMinNominal);
+		rightShooterMotor ->ConfigPeakOutputVoltage(rightShooterPidMaxPeak,rightShooterPidMinPeak);
+		rightShooterMotor ->SetAllowableClosedLoopErr(rightShooterPidAllowableErr);
+
 		ballCapturedPhotoSwitch = new DigitalInput(ballCapturedPhotoSwitchCh);
 
 		rollerInOn = false;
@@ -197,6 +226,8 @@ public:
 		delete rightDriveEnc;
 		delete controlStick;
 		delete rollerMotor;
+		delete leftShooterMotor;
+		delete rightShooterMotor;
 		delete ballCapturedPhotoSwitch;
 		delete armMotor;
 	}
